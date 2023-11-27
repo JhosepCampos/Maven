@@ -1,0 +1,108 @@
+<header>
+	<div style="background-color: #f5f5f5; font-size: 12px" class="alerts text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<p class="py-2 mb-0">
+						Despachamos a todo Lima Metropolitana.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="headerMenu container py-2">
+		<div class="row">
+			<div class="col-2">
+				<a class="d-flex text-decoration-none align-items-center gap-2" th:href="@{/}">
+					<figure class="d-flex align-items-center mb-0">
+						<img style="max-width: 50px;" src="/images/logo.png" th:src="@{/images/logo.png}" alt="Logo" />
+					</figure>
+					<h2 class="mb-0 fs-5 text-black">Minimarket</h2>
+				</a>
+			</div>
+
+			
+
+			<div class="col-6">
+				<div class="d-flex justify-content-center align-items-center gap-2">
+					<p class="mb-0">
+						<i class="bi bi-truck px-2 text-success fs-4"></i>09:00 a 20:00 hrs
+					</p>
+					<span>|</span>
+					<p style="cursor: pointer;" class="mb-0">
+						<i class="bi bi-geo-alt px-2 text-danger fs-4"></i>Selecciona tu
+						dirección
+					</p>
+				</div>
+			</div>
+
+			<div class="col-2">
+				<div class="row align-items-center justify-content-end">
+					<div class="col-8 text-center" th:if="${user != null}">
+						<div class="loginUser position-relative">
+							<div th:if="${user.tipoUsuario.id == 1}" class="d-flex align-items-center">
+								<p id="userAccount" style="color: #E40046; cursor: pointer; font-size: 18px;"
+									class="mb-0 fw-bold">
+									¡Hola
+									<span th:text="${user.nombre}"></span>!
+								</p>
+								<nav id="submenuAccount"
+									style="margin-top: 10px; border: 1px solid #EDEDED; width: 250px; z-index: 5; background-color: #fff;"
+									class="submenu position-absolute top-100 end-0 gap-2 rounded-2 inactive">
+									<ul class="list-group list-group-flush d-flex flex-column m-0 p-2">
+										<li style="padding-left: 0;" class="list-group-item"><a
+												class="text-decoration-none text-black"
+												th:href="@{/gestion-productos}">Gestionar
+												productos</a></li>
+										<li style="padding-left: 0;" class="list-group-item"><a
+												class="text-decoration-none text-black"
+												th:href="@{/gestion-proveedores}">Gestionar
+												proveedores</a></li>
+										<li style="padding-left: 0;" class="list-group-item"><a
+												class="text-decoration-none text-black"
+												th:href="@{/gestion-usuarios}">Gestionar
+												usuarios</a></li>
+										<li style="padding-left: 0;" class="list-group-item"><a
+												class="text-decoration-none text-black" th:href="@{/logout}">Cerrar
+												sesión</a></li>
+									</ul>
+								</nav>
+							</div>
+							<div th:if="${user.tipoUsuario.id == 2}" class="d-flex align-items-center">
+								<p id="userAccount" style="color: #E40046; cursor: pointer; font-size: 18px;"
+									class="mb-0 fw-bold">¡Hola <span th:text="${user.nombre}"></span>!</p>
+								<nav id="submenuAccount"
+									style="margin-top: 10px; border: 1px solid #EDEDED; width: 180px; z-index: 5; background-color: #fff;"
+									class="submenu position-absolute top-100 end-0 gap-2 rounded-2 inactive">
+									<ul class="d-flex flex-column m-0 p-2">
+										<li style="padding-left: 0;" class="list-group-item"><a
+												class="text-decoration-none text-black" th:href="@{/my-account}">Mi
+												cuenta</a></li>
+										<li style="padding-left: 0;" class="list-group-item"><a
+												class="text-decoration-none text-black" th:href="@{/logout}">Cerrar
+												sesión</a></li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-auto" th:if="${user == null}">
+						<a class="text-black" th:href="@{/ingreso}">
+							<i class="bi bi-person fs-4"></i>
+						</a>
+					</div>
+
+
+					<div class="col-auto text-center">
+						<a th:href="@{/carrito}" class="position-relative text-black">
+							<i class="bi bi-cart fs-4"></i>
+							<span th:text="${countCarrito}" style="font-size: 12px; width: 20px; height: 20px; top: 0; right: -8px;"
+								class="position-absolute bottom-20 d-flex align-items-center justify-content-center bg-danger p-2 text-white rounded-5"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

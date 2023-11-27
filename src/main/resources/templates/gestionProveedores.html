@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Gestion Proveedores - Minimarket</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+	<link rel="icon" type="image/png" href="/images/logo.png" />
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+	<style>
+		.inactive {
+			display: none;
+		}
+
+		.active {
+			display: initial;
+		}
+
+		.hidden {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div th:replace="~{componentes/header :: header}"></div>
+
+	<div class="container">
+		<div class="row">
+			<h1 class="my-4">Gestión de Proveedores</h1>
+			<div class="col-3">
+				<form th:action="@{/gestion-proveedores/guardar}" method="post" th:object="${nuevoProveedor}">
+					<input type="hidden" th:field="*{idprove}" />
+
+					<label class="form-label" for="nombre">Nombre:</label>
+					<input class="form-control" type="text" id="nombre" th:field="*{nombre}" required><br>
+
+					<label class="form-label" for="correo">Email:</label>
+					<input class="form-control" id="correo" type="email" th:field="*{correo}" required><br>
+
+					<label class="form-label" for="direccion">Dirección:</label>
+					<input class="form-control" type="text" id="direccion" th:field="*{direccion}" required><br>
+
+					<label class="form-label" for="distrito">Distrito:</label>
+					<input class="form-control" type="text" id="distrito" th:field="*{distrito}" required><br>
+
+					<label class="form-label" for="telefono">Telefono:</label>
+					<input class="form-control" type="text" id="telefono" th:field="*{telefono}" required><br>
+
+					<button style="width: 100%;" class="btn btn-success" type="submit">Guardar Proveedor</button>
+				</form>
+				<p style="width: 100%; margin: 1em 0;" id="mensaje" class="badge text-bg-danger hidden"
+					th:text="${mensaje}"></p>
+			</div>
+			<div class="col-9">
+				<table class="table">
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Correo</th>
+						<th scope="col">Dirección</th>
+						<th scope="col">Distrito</th>
+						<th scope="col">Telefono</th>
+					</tr>
+					<tr th:each="prove : ${proveedores}">
+						<td scope="row" th:text="${prove.idprove}"></td>
+						<td th:text="${prove.nombre}"></td>
+						<td th:text="${prove.correo}"></td>
+						<td th:text="${prove.direccion}"></td>
+						<td th:text="${prove.distrito}"></td>
+						<td th:text="${prove.telefono}"></td>
+						<td>
+							<a class="btn btn-primary"
+								th:href="@{'/gestion-proveedores/editar/' + ${prove.idprove}}">Editar</a>
+							<a class="btn btn-danger"
+								th:href="@{'/gestion-proveedores/eliminar/' + ${prove.idprove}}">Eliminar</a>
+						</td>
+					</tr>
+				</table>
+				<nav>
+					<ul class="pagination">
+						<li class="page-item" th:each="pagina:${paginas}">
+							<a class="page-link" th:href="@{/gestion-proveedores?pagina={p}(p=${pagina})}" th:text="${pagina}"></a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+		document.addEventListener("DOMContentLoaded", function () {
+			//Submenu
+			const userMenu = document.querySelector("#userAccount");
+			const menuNav = document.querySelector("#submenuAccount");
+			//Menu Principal
+			const categoriasMenu = document.querySelector("#menuCategorias");
+			const categoriasNav = document.querySelector("#menuPrincipal");
+
+			if (userMenu) {
+				userMenu.addEventListener("click", () => {
+					menuNav.classList.toggle("active");
+				});
+
+				document.addEventListener("click", (event) => {
+					if (!userMenu.contains(event.target) && !menuNav.contains(event.target)) {
+						menuNav.classList.remove("active");
+					}
+				});
+			}
+
+			if (categoriasMenu) {
+				categoriasMenu.addEventListener("click", () => {
+					categoriasNav.classList.toggle("active");
+				});
+
+				document.addEventListener("click", (event) => {
+					if (!categoriasMenu.contains(event.target) && !categoriasNav.contains(event.target)) {
+						categoriasNav.classList.remove("active");
+					}
+				});
+			}
+
+		});
+
+	</script>
+	<script th:inline="javascript">
+		var mensajeElement = document.getElementById('mensaje');
+
+		mensajeElement.classList.remove('hidden');
+
+		setTimeout(function () {
+			mensajeElement.classList.add('hidden');
+		}, 3000);
+	</script>
+</body>
+
+</html>
